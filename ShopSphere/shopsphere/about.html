@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Us - ShopSphere</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <style>
+    .stat-card {
+      background: var(--bg-card);
+      border-radius: var(--border-radius-lg);
+      padding: 30px 20px;
+      text-align: center;
+      border: 1px solid var(--border-light);
+      box-shadow: var(--shadow-sm);
+      transition: var(--transition);
+    }
+
+    .stat-card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-md);
+      border-color: var(--primary);
+    }
+
+    .stat-number {
+      font-size: 2.5rem;
+      font-weight: 800;
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    .stat-label {
+      color: var(--text-secondary);
+      font-size: 0.88rem;
+    }
+
+    .team-card {
+      background: var(--bg-card);
+      border-radius: var(--border-radius-lg);
+      padding: 28px 20px;
+      text-align: center;
+      border: 1px solid var(--border-light);
+      transition: var(--transition);
+    }
+
+    .team-card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .team-avatar {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: var(--gradient-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      margin: 0 auto 16px;
+      box-shadow: var(--shadow-primary);
+    }
+
+    .value-card {
+      background: var(--bg-card);
+      border-radius: var(--border-radius-lg);
+      padding: 28px;
+      border: 1px solid var(--border-light);
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+      transition: var(--transition);
+    }
+
+    .value-card:hover {
+      border-color: var(--primary);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .value-icon {
+      width: 50px;
+      height: 50px;
+      border-radius: 14px;
+      background: var(--gradient-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      flex-shrink: 0;
+    }
+  </style>
+</head>
+<body>
+
+<div class="toast-container" id="toast-container"></div>
+<button class="scroll-top" id="scroll-top" aria-label="Scroll to top">↑</button>
+
+<!-- Navbar -->
+<nav class="navbar">
+  <div class="nav-container">
+    <a href="index.html" class="nav-logo"><div class="logo-icon">🛍️</div>Shop<span>Sphere</span></a>
+    <div class="nav-search" role="search">
+      <span class="search-icon">🔍</span>
+      <input type="search" id="nav-search" placeholder="Search products..." aria-label="Search">
+      <button class="search-btn" onclick="document.getElementById('nav-search').dispatchEvent(new KeyboardEvent('keydown',{key:'Enter'}))">Search</button>
+    </div>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="products.html">Products</a></li>
+      <li><a href="about.html" class="active">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <div class="nav-actions">
+      <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">🌙</button>
+      <a href="wishlist.html" class="nav-action-btn" aria-label="Wishlist">🤍<span class="nav-badge" id="wishlist-badge" style="display:none">0</span></a>
+      <a href="cart.html" class="nav-action-btn" aria-label="Cart">🛒<span class="nav-badge" id="cart-badge" style="display:none">0</span></a>
+      <a href="login.html" class="btn btn-primary btn-sm">Sign In</a>
+      <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</nav>
+
+<div class="mobile-menu" id="mobile-menu">
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="products.html">Products</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="contact.html">Contact</a></li>
+    <li><a href="login.html">Sign In</a></li>
+  </ul>
+</div>
+
+<header class="page-header">
+  <div class="container page-header-content">
+    <h1>About ShopSphere</h1>
+    <p>The story behind your favorite shopping destination</p>
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="index.html">Home</a><span>›</span><span aria-current="page">About Us</span>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <!-- Our Story -->
+  <section class="section-padding">
+    <div class="container">
+      <div class="about-grid">
+        <div>
+          <span class="section-tag">Our Story</span>
+          <h2 class="section-title" style="text-align:left;margin-bottom:16px">We're Reimagining Online Shopping</h2>
+          <p style="color:var(--text-secondary);line-height:1.8;margin-bottom:16px;font-size:1rem">
+            Founded in 2020, ShopSphere started with a simple mission: make quality products accessible to everyone. We believe shopping should be effortless, enjoyable, and trustworthy.
+          </p>
+          <p style="color:var(--text-secondary);line-height:1.8;margin-bottom:24px;font-size:1rem">
+            Today, we serve over 200,000 customers worldwide with a curated selection of premium products across electronics, fashion, home goods, and more. Every product is carefully vetted for quality.
+          </p>
+          <div style="display:flex;gap:12px;flex-wrap:wrap">
+            <a href="products.html" class="btn btn-primary">Explore Products</a>
+            <a href="contact.html" class="btn btn-secondary">Get in Touch</a>
+          </div>
+        </div>
+        <div style="background:var(--gradient-hero);border-radius:var(--border-radius-xl);height:380px;display:flex;align-items:center;justify-content:center;font-size:7rem;position:relative;overflow:hidden">
+          <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 30% 50%,rgba(108,99,255,0.4),transparent 60%)"></div>
+          <span style="position:relative;z-index:1;animation:float 3s ease-in-out infinite">🛍️</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats -->
+  <section class="section-padding" style="background:var(--bg-secondary)" aria-label="Company statistics">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">By the Numbers</span>
+        <h2 class="section-title">ShopSphere in Numbers</h2>
+      </div>
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-number">200K+</div>
+          <div class="stat-label">Happy Customers</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">50K+</div>
+          <div class="stat-label">Products Listed</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">4.9★</div>
+          <div class="stat-label">Average Rating</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">99%</div>
+          <div class="stat-label">Satisfaction Rate</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Values -->
+  <section class="section-padding" aria-label="Company values">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">What Drives Us</span>
+        <h2 class="section-title">Our Core Values</h2>
+        <p class="section-subtitle">Everything we do is guided by these principles</p>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px">
+        <div class="value-card">
+          <div class="value-icon">🏆</div>
+          <div>
+            <h3 style="font-weight:700;margin-bottom:8px;font-size:1rem">Quality First</h3>
+            <p style="color:var(--text-secondary);font-size:0.88rem;line-height:1.7">Every product is reviewed and tested before being listed. We only sell what we'd buy ourselves.</p>
+          </div>
+        </div>
+        <div class="value-card">
+          <div class="value-icon">🔒</div>
+          <div>
+            <h3 style="font-weight:700;margin-bottom:8px;font-size:1rem">Trust & Security</h3>
+            <p style="color:var(--text-secondary);font-size:0.88rem;line-height:1.7">Your data and payments are always secure. We use industry-leading encryption for all transactions.</p>
+          </div>
+        </div>
+        <div class="value-card">
+          <div class="value-icon">🤝</div>
+          <div>
+            <h3 style="font-weight:700;margin-bottom:8px;font-size:1rem">Customer First</h3>
+            <p style="color:var(--text-secondary);font-size:0.88rem;line-height:1.7">24/7 support, hassle-free returns, and fast shipping. We go above and beyond for our customers.</p>
+          </div>
+        </div>
+        <div class="value-card">
+          <div class="value-icon">🌿</div>
+          <div>
+            <h3 style="font-weight:700;margin-bottom:8px;font-size:1rem">Sustainability</h3>
+            <p style="color:var(--text-secondary);font-size:0.88rem;line-height:1.7">We partner with eco-friendly brands and use sustainable packaging wherever possible.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Team -->
+  <section class="section-padding" style="background:var(--bg-secondary)" aria-label="Team members">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Meet the Team</span>
+        <h2 class="section-title">The People Behind ShopSphere</h2>
+        <p class="section-subtitle">A passionate team dedicated to your shopping experience</p>
+      </div>
+      <div class="team-grid">
+        <div class="team-card">
+          <div class="team-avatar">👨‍💼</div>
+          <h3 style="font-weight:700;margin-bottom:4px;font-size:1rem">Alex Thompson</h3>
+          <p style="color:var(--primary);font-size:0.82rem;font-weight:600;margin-bottom:8px">CEO & Co-Founder</p>
+          <p style="color:var(--text-secondary);font-size:0.82rem;line-height:1.6">10+ years in e-commerce. Passionate about building customer-first products.</p>
+        </div>
+        <div class="team-card">
+          <div class="team-avatar">👩‍🎨</div>
+          <h3 style="font-weight:700;margin-bottom:4px;font-size:1rem">Sarah Chen</h3>
+          <p style="color:var(--primary);font-size:0.82rem;font-weight:600;margin-bottom:8px">Head of Design</p>
+          <p style="color:var(--text-secondary);font-size:0.82rem;line-height:1.6">Award-winning designer with a passion for intuitive, beautiful interfaces.</p>
+        </div>
+        <div class="team-card">
+          <div class="team-avatar">👨‍💻</div>
+          <h3 style="font-weight:700;margin-bottom:4px;font-size:1rem">Marcus Lee</h3>
+          <p style="color:var(--primary);font-size:0.82rem;font-weight:600;margin-bottom:8px">CTO</p>
+          <p style="color:var(--text-secondary);font-size:0.82rem;line-height:1.6">Full-stack expert building scalable systems that power millions of transactions.</p>
+        </div>
+        <div class="team-card">
+          <div class="team-avatar">👩‍💼</div>
+          <h3 style="font-weight:700;margin-bottom:4px;font-size:1rem">Priya Patel</h3>
+          <p style="color:var(--primary);font-size:0.82rem;font-weight:600;margin-bottom:8px">Head of Operations</p>
+          <p style="color:var(--text-secondary);font-size:0.82rem;line-height:1.6">Supply chain expert ensuring products reach you on time, every time.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="newsletter">
+    <div class="container">
+      <div class="newsletter-content">
+        <h2>Ready to Start Shopping? 🛍️</h2>
+        <p>Join 200,000+ happy customers and discover premium products at great prices.</p>
+        <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:8px">
+          <a href="products.html" class="btn btn-dark btn-lg" style="background:white;color:var(--primary);font-weight:700">Browse Products</a>
+          <a href="signup.html" class="btn btn-secondary btn-lg" style="border-color:rgba(255,255,255,0.5);color:white">Create Account</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="nav-logo" style="font-size:1.3rem"><div class="logo-icon">🛍️</div>Shop<span>Sphere</span></a>
+        <p>Your premium destination for quality products.</p>
+        <div class="social-links">
+          <a href="#" class="social-link" aria-label="Facebook">📘</a>
+          <a href="#" class="social-link" aria-label="Twitter">🐦</a>
+          <a href="#" class="social-link" aria-label="Instagram">📷</a>
+          <a href="#" class="social-link" aria-label="YouTube">▶️</a>
+        </div>
+      </div>
+      <nav class="footer-col"><h4>Shop</h4><ul class="footer-links"><li><a href="products.html">All Products</a></li><li><a href="products.html?sort=popular">Best Sellers</a></li></ul></nav>
+      <nav class="footer-col"><h4>Account</h4><ul class="footer-links"><li><a href="login.html">Sign In</a></li><li><a href="signup.html">Register</a></li><li><a href="cart.html">My Cart</a></li></ul></nav>
+      <nav class="footer-col"><h4>Help</h4><ul class="footer-links"><li><a href="about.html">About Us</a></li><li><a href="contact.html">Contact</a></li><li><a href="#">Shipping Info</a></li></ul></nav>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 ShopSphere. All rights reserved.</p>
+      <div class="payment-methods"><span class="payment-icon">VISA</span><span class="payment-icon">MC</span><span class="payment-icon">PayPal</span></div>
+    </div>
+  </div>
+</footer>
+
+<script src="js/products.js"></script>
+<script src="js/cart.js"></script>
+<script src="js/wishlist.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

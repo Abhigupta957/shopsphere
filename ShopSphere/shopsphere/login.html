@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign In - ShopSphere</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <style>
+    body { overflow-x: hidden; }
+
+    .auth-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 100vh;
+    }
+
+    .auth-visual {
+      background: var(--gradient-hero);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .auth-visual::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 40% 50%, rgba(108,99,255,0.4), transparent 60%);
+    }
+
+    .auth-visual-content {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      color: white;
+      max-width: 380px;
+    }
+
+    .auth-visual-emoji {
+      font-size: 5rem;
+      margin-bottom: 24px;
+      animation: float 4s ease-in-out infinite;
+    }
+
+    .auth-visual h2 {
+      font-size: 2rem;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+
+    .auth-visual p {
+      color: rgba(255,255,255,0.75);
+      line-height: 1.7;
+      margin-bottom: 30px;
+    }
+
+    .auth-benefit {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: rgba(255,255,255,0.85);
+      font-size: 0.9rem;
+      margin-bottom: 12px;
+      text-align: left;
+    }
+
+    .auth-benefit-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      background: rgba(255,255,255,0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .auth-side {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px;
+      background: var(--bg-primary);
+    }
+
+    .auth-card {
+      width: 100%;
+      max-width: 420px;
+    }
+
+    .auth-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: var(--text-primary);
+      margin-bottom: 32px;
+      justify-content: center;
+    }
+
+    .auth-logo .logo-icon {
+      width: 34px;
+      height: 34px;
+      background: var(--gradient-primary);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 0.9rem;
+    }
+
+    .auth-title {
+      font-size: 1.6rem;
+      font-weight: 800;
+      margin-bottom: 6px;
+      color: var(--text-primary);
+    }
+
+    .auth-subtitle {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      margin-bottom: 28px;
+    }
+
+    .social-login {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 24px;
+    }
+
+    .social-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 12px;
+      border: 2px solid var(--border-color);
+      border-radius: var(--border-radius);
+      font-weight: 600;
+      font-size: 0.88rem;
+      color: var(--text-primary);
+      background: var(--bg-primary);
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .social-btn:hover {
+      border-color: var(--primary);
+      background: rgba(108,99,255,0.05);
+    }
+
+    .divider-text {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 20px 0;
+      color: var(--text-muted);
+      font-size: 0.82rem;
+    }
+
+    .divider-text::before,
+    .divider-text::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border-color);
+    }
+
+    .password-wrapper {
+      position: relative;
+    }
+
+    .password-toggle {
+      position: absolute;
+      right: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer;
+      color: var(--text-muted);
+      font-size: 1rem;
+      background: none;
+      border: none;
+      transition: color 0.2s;
+    }
+
+    .password-toggle:hover { color: var(--primary); }
+
+    @media (max-width: 768px) {
+      .auth-grid { grid-template-columns: 1fr; }
+      .auth-visual { display: none; }
+      .auth-side { padding: 20px; min-height: 100vh; }
+      .auth-card { max-width: 100%; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="toast-container" id="toast-container"></div>
+
+<div class="auth-grid">
+  <!-- Visual Side -->
+  <div class="auth-visual" role="complementary" aria-label="Sign in benefits">
+    <div class="auth-visual-content">
+      <div class="auth-visual-emoji">🛍️</div>
+      <h2>Welcome Back!</h2>
+      <p>Sign in to access your ShopSphere account and continue your premium shopping experience.</p>
+      <div class="auth-benefit">
+        <div class="auth-benefit-icon">🛒</div>
+        Access your order history and wishlist
+      </div>
+      <div class="auth-benefit">
+        <div class="auth-benefit-icon">🎁</div>
+        Exclusive deals and early access
+      </div>
+      <div class="auth-benefit">
+        <div class="auth-benefit-icon">🚚</div>
+        Track deliveries in real-time
+      </div>
+      <div class="auth-benefit">
+        <div class="auth-benefit-icon">🔒</div>
+        Secure, encrypted transactions
+      </div>
+    </div>
+  </div>
+
+  <!-- Form Side -->
+  <div class="auth-side">
+    <div class="auth-card">
+      <a href="index.html" class="auth-logo">
+        <div class="logo-icon">🛍️</div>
+        Shop<span style="color:var(--primary)">Sphere</span>
+      </a>
+
+      <h1 class="auth-title">Sign in to your account</h1>
+      <p class="auth-subtitle">Don't have an account? <a href="signup.html" style="color:var(--primary);font-weight:600">Create one free →</a></p>
+
+      <div class="social-login">
+        <button class="social-btn" onclick="showToast('Google Login','Social login coming soon!','info')">
+          <span>🔵</span> Continue with Google
+        </button>
+        <button class="social-btn" onclick="showToast('Apple Login','Social login coming soon!','info')">
+          <span>🍎</span> Continue with Apple
+        </button>
+      </div>
+
+      <div class="divider-text">or sign in with email</div>
+
+      <form id="login-form" novalidate>
+        <div class="form-group">
+          <label class="form-label" for="login-email">Email Address</label>
+          <input type="email" id="login-email" class="form-control" placeholder="john@example.com" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="login-password">Password</label>
+          <div class="password-wrapper">
+            <input type="password" id="login-password" class="form-control" placeholder="Enter your password" required style="padding-right:45px">
+            <button type="button" class="password-toggle" onclick="togglePassword('login-password',this)" aria-label="Toggle password visibility">👁️</button>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:24px">
+          <label style="display:flex;align-items:center;gap:8px;font-size:0.85rem;cursor:pointer">
+            <input type="checkbox" style="accent-color:var(--primary)"> Remember me
+          </label>
+          <a href="#" style="color:var(--primary);font-size:0.85rem;font-weight:600" onclick="showToast('Reset Password','A password reset link will be sent to your email.','info');return false;">Forgot password?</a>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width:100%;padding:14px">Sign In</button>
+      </form>
+
+      <p style="text-align:center;font-size:0.82rem;color:var(--text-muted);margin-top:24px">
+        By signing in, you agree to our <a href="#" style="color:var(--primary)">Terms of Service</a> and <a href="#" style="color:var(--primary)">Privacy Policy</a>.
+      </p>
+
+      <div style="text-align:center;margin-top:16px">
+        <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme" style="display:inline-flex;align-items:center;gap:6px;font-size:0.82rem;padding:6px 14px;border-radius:50px">
+          🌙 <span>Switch Theme</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="js/products.js"></script>
+<script src="js/cart.js"></script>
+<script src="js/wishlist.js"></script>
+<script src="js/app.js"></script>
+<script>
+  function togglePassword(id, btn) {
+    var input = document.getElementById(id);
+    if (input.type === 'password') {
+      input.type = 'text';
+      btn.textContent = '🙈';
+    } else {
+      input.type = 'password';
+      btn.textContent = '👁️';
+    }
+  }
+
+  document.getElementById('login-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    var email = document.getElementById('login-email').value.trim();
+    var password = document.getElementById('login-password').value;
+    if (!email || !password) {
+      showToast('Incomplete', 'Please fill in all fields.', 'warning');
+      return;
+    }
+    // Demo: accept any credentials
+    showToast('Welcome Back! 👋', 'You have been signed in successfully.', 'success');
+    setTimeout(function() { window.location.href = 'index.html'; }, 1200);
+  });
+</script>
+</body>
+</html>

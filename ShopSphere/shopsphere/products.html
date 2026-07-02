@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Products - ShopSphere</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <style>
+    .sidebar {
+      background: var(--bg-card);
+      border-radius: var(--border-radius-lg);
+      padding: 24px;
+      border: 1px solid var(--border-light);
+      height: fit-content;
+      position: sticky;
+      top: 90px;
+    }
+
+    .sidebar-section { margin-bottom: 28px; }
+    .sidebar-section:last-child { margin-bottom: 0; }
+
+    .sidebar-title {
+      font-size: 0.88rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--text-secondary);
+      margin-bottom: 14px;
+    }
+
+    .filter-item {
+      cursor: pointer;
+      transition: background 0.2s;
+      border-radius: var(--border-radius-sm);
+    }
+
+    .filter-item:hover { background: var(--bg-secondary); }
+
+    .price-inputs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .price-inputs input {
+      background: var(--bg-secondary);
+      border: 2px solid var(--border-color);
+      border-radius: var(--border-radius-sm);
+      padding: 8px 12px;
+      color: var(--text-primary);
+      font-size: 0.88rem;
+      width: 100%;
+      transition: var(--transition);
+    }
+
+    .price-inputs input:focus {
+      border-color: var(--primary);
+    }
+
+    .rating-filter {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .rating-filter label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 8px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.2s;
+      font-size: 0.9rem;
+    }
+
+    .rating-filter label:hover { background: var(--bg-secondary); }
+
+    .filter-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+    }
+
+    .filter-controls {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .sort-select {
+      padding: 10px 16px;
+      background: var(--bg-card);
+      border: 2px solid var(--border-color);
+      border-radius: var(--border-radius-sm);
+      color: var(--text-primary);
+      font-size: 0.88rem;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .sort-select:focus { border-color: var(--primary); outline: none; }
+
+    .search-bar-product {
+      position: relative;
+      flex: 1;
+      max-width: 320px;
+    }
+
+    .search-bar-product input {
+      width: 100%;
+      padding: 10px 16px 10px 40px;
+      background: var(--bg-card);
+      border: 2px solid var(--border-color);
+      border-radius: var(--border-radius-sm);
+      color: var(--text-primary);
+      font-size: 0.88rem;
+      transition: var(--transition);
+    }
+
+    .search-bar-product input:focus {
+      border-color: var(--primary);
+      outline: none;
+    }
+
+    .search-bar-product::before {
+      content: '🔍';
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 0.85rem;
+      pointer-events: none;
+    }
+
+    #filter-toggle {
+      display: none;
+    }
+
+    @media (max-width: 900px) {
+      #filter-toggle { display: flex; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="toast-container" id="toast-container"></div>
+<button class="scroll-top" id="scroll-top" aria-label="Scroll to top">↑</button>
+
+<div class="modal-overlay" id="quick-view-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <h3>Quick View</h3>
+      <button class="modal-close" onclick="closeModal('quick-view-modal')">✕</button>
+    </div>
+    <div class="modal-body"></div>
+  </div>
+</div>
+
+<!-- Navbar -->
+<nav class="navbar">
+  <div class="nav-container">
+    <a href="index.html" class="nav-logo">
+      <div class="logo-icon">🛍️</div>Shop<span>Sphere</span>
+    </a>
+    <div class="nav-search" role="search">
+      <span class="search-icon">🔍</span>
+      <input type="search" id="nav-search" placeholder="Search products..." aria-label="Search">
+      <button class="search-btn" onclick="document.getElementById('nav-search').dispatchEvent(new KeyboardEvent('keydown',{key:'Enter'}))">Search</button>
+    </div>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="products.html" class="active">Products</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <div class="nav-actions">
+      <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">🌙</button>
+      <a href="wishlist.html" class="nav-action-btn" aria-label="Wishlist">🤍<span class="nav-badge" id="wishlist-badge" style="display:none">0</span></a>
+      <a href="cart.html" class="nav-action-btn" aria-label="Cart">🛒<span class="nav-badge" id="cart-badge" style="display:none">0</span></a>
+      <a href="login.html" class="btn btn-primary btn-sm">Sign In</a>
+      <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</nav>
+
+<div class="mobile-menu" id="mobile-menu">
+  <div class="mobile-search">
+    <input type="search" placeholder="Search products..." onkeydown="if(event.key==='Enter'){window.location.href='products.html?search='+encodeURIComponent(this.value)}">
+  </div>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="products.html">Products</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="contact.html">Contact</a></li>
+    <li><a href="login.html">Sign In</a></li>
+  </ul>
+</div>
+
+<!-- Page Header -->
+<header class="page-header">
+  <div class="container page-header-content">
+    <h1>All Products</h1>
+    <p>Discover our curated collection of premium products</p>
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="index.html">Home</a>
+      <span aria-hidden="true">›</span>
+      <span aria-current="page">Products</span>
+    </nav>
+  </div>
+</header>
+
+<!-- Main Content -->
+<main>
+  <div class="container">
+    <div class="products-page-layout">
+
+      <!-- Sidebar -->
+      <aside class="sidebar" aria-label="Product filters">
+        <div class="sidebar-section">
+          <div class="sidebar-title">Categories</div>
+          <div id="sidebar-categories"></div>
+        </div>
+
+        <div class="sidebar-section">
+          <div class="sidebar-title">Price Range</div>
+          <div class="price-inputs">
+            <input type="number" id="price-min" placeholder="Min $" min="0">
+            <input type="number" id="price-max" placeholder="Max $" min="0">
+          </div>
+        </div>
+
+        <div class="sidebar-section">
+          <div class="sidebar-title">Min Rating</div>
+          <div class="rating-filter">
+            <label><input type="radio" name="rating" value="4.5"> ⭐⭐⭐⭐⭐ 4.5+</label>
+            <label><input type="radio" name="rating" value="4"> ⭐⭐⭐⭐ 4.0+</label>
+            <label><input type="radio" name="rating" value="3"> ⭐⭐⭐ 3.0+</label>
+            <label><input type="radio" name="rating" value="" checked> All Ratings</label>
+          </div>
+        </div>
+
+        <div class="sidebar-section">
+          <div class="sidebar-title">Availability</div>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <label style="display:flex;align-items:center;gap:8px;font-size:0.9rem;cursor:pointer"><input type="checkbox" style="accent-color:var(--primary)" checked> In Stock</label>
+            <label style="display:flex;align-items:center;gap:8px;font-size:0.9rem;cursor:pointer"><input type="checkbox" style="accent-color:var(--primary)"> On Sale</label>
+          </div>
+        </div>
+
+        <button class="btn btn-secondary" style="width:100%" onclick="location.href='products.html'">Clear All Filters</button>
+      </aside>
+
+      <!-- Products Main -->
+      <div>
+        <div class="filter-bar">
+          <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+            <button id="filter-toggle" class="btn btn-secondary btn-sm">⚙️ Filters</button>
+            <span id="products-count" style="color:var(--text-muted);font-size:0.88rem">Loading...</span>
+          </div>
+          <div class="filter-controls">
+            <div class="search-bar-product">
+              <input type="text" id="product-search" placeholder="Search products...">
+            </div>
+            <select class="sort-select" id="sort-select" aria-label="Sort products">
+              <option value="popular">Most Popular</option>
+              <option value="price-asc">Price: Low to High</option>
+              <option value="price-desc">Price: High to Low</option>
+              <option value="rating">Best Rated</option>
+              <option value="name">Name A–Z</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="products-grid" id="products-grid"></div>
+
+        <nav class="pagination" id="pagination" aria-label="Products pagination"></nav>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- Newsletter -->
+<section class="newsletter">
+  <div class="container">
+    <div class="newsletter-content">
+      <h2>Get Exclusive Deals 🎁</h2>
+      <p>Subscribe and be the first to know about new products and special offers.</p>
+      <form class="newsletter-form" id="newsletter-form">
+        <input type="email" placeholder="Your email address" required aria-label="Email">
+        <button type="submit">Subscribe</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="nav-logo" style="font-size:1.3rem"><div class="logo-icon">🛍️</div>Shop<span>Sphere</span></a>
+        <p>Your premium destination for quality products at unbeatable prices.</p>
+        <div class="social-links">
+          <a href="#" class="social-link" aria-label="Facebook">📘</a>
+          <a href="#" class="social-link" aria-label="Twitter">🐦</a>
+          <a href="#" class="social-link" aria-label="Instagram">📷</a>
+          <a href="#" class="social-link" aria-label="YouTube">▶️</a>
+        </div>
+      </div>
+      <nav class="footer-col">
+        <h4>Shop</h4>
+        <ul class="footer-links">
+          <li><a href="products.html">All Products</a></li>
+          <li><a href="products.html?category=Electronics">Electronics</a></li>
+          <li><a href="products.html?category=Accessories">Accessories</a></li>
+          <li><a href="products.html?sort=popular">Best Sellers</a></li>
+        </ul>
+      </nav>
+      <nav class="footer-col">
+        <h4>Account</h4>
+        <ul class="footer-links">
+          <li><a href="login.html">Sign In</a></li>
+          <li><a href="signup.html">Register</a></li>
+          <li><a href="cart.html">My Cart</a></li>
+          <li><a href="wishlist.html">Wishlist</a></li>
+        </ul>
+      </nav>
+      <nav class="footer-col">
+        <h4>Help</h4>
+        <ul class="footer-links">
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="#">Shipping Info</a></li>
+          <li><a href="#">Returns</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 ShopSphere. All rights reserved.</p>
+      <div class="payment-methods">
+        <span class="payment-icon">VISA</span>
+        <span class="payment-icon">MC</span>
+        <span class="payment-icon">PayPal</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="js/products.js"></script>
+<script src="js/cart.js"></script>
+<script src="js/wishlist.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
