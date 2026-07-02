@@ -55,11 +55,6 @@ shopsphere/
 └── README.md
 ```
 
-## How to Run
-
-Open `index.html` in any modern browser. No build step or server required.
-
-For best results use a local server (VS Code Live Server or `npx serve .`).
 
 ## Tech
 
@@ -68,6 +63,3 @@ For best results use a local server (VS Code Live Server or `npx serve .`).
 - Vanilla JS ES6+ (no frameworks, no libraries)
 - localStorage for cart, wishlist, theme persistence
 
-## Coupon Code
-
-Use **SAVE10** at checkout for 10% off.
